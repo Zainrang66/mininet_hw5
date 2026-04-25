@@ -75,63 +75,12 @@ def run():
     router_B = net.get('router_B')
     router_C = net.get('router_C')
 
-    host_A_1 = net.get('host_A_1')
-    host_A_2 = net.get('host_A_2')
-    host_B_1 = net.get('host_B_1')
-    host_B_2 = net.get('host_B_2')
-    host_C_1 = net.get('host_C_1')
-    host_C_2 = net.get('host_C_2')
-
-    # ------------------------------------------------------------------
-    # Task 3 -- static routes on each router
-    # ------------------------------------------------------------------
-    info('*** Adding routes on Router A\n')
-    # Router A is directly on LAN A (20.10.172.128/26)
-    # It needs routes to LAN B and LAN C through its inter-router interfaces
-    print(router_A.cmd('ip route add 20.10.172.0/25   via 20.10.100.2 dev ra-eth1'))
-    print(router_A.cmd('ip route add 20.10.172.192/27 via 20.10.100.6 dev ra-eth2'))
-
-    info('*** Adding routes on Router B\n')
-    # Router B is directly on LAN B (20.10.172.0/25)
-    # It needs routes to LAN A and LAN C through its inter-router interfaces
-    print(router_B.cmd('ip route add 20.10.172.128/26 via 20.10.100.1 dev rb-eth1'))
-    print(router_B.cmd('ip route add 20.10.172.192/27 via 20.10.100.10 dev rb-eth2'))
-
-    info('*** Adding routes on Router C\n')
-    # Router C is directly on LAN C (20.10.172.192/27)
-    # It needs routes to LAN A and LAN B through its inter-router interfaces
-    print(router_C.cmd('ip route add 20.10.172.128/26 via 20.10.100.5 dev rc-eth1'))
-    print(router_C.cmd('ip route add 20.10.172.0/25   via 20.10.100.9 dev rc-eth2'))
-
-    # ------------------------------------------------------------------
-    # Task 3 -- static routes on each host
-    # The hosts already have a default route to their local router,
-    # but we add explicit routes to be safe
-    # ------------------------------------------------------------------
-    info('*** Adding routes on hosts\n')
-    print(host_A_1.cmd('ip route add 20.10.172.0/25   via 20.10.172.190'))
-    print(host_A_1.cmd('ip route add 20.10.172.192/27 via 20.10.172.190'))
-    print(host_A_2.cmd('ip route add 20.10.172.0/25   via 20.10.172.190'))
-    print(host_A_2.cmd('ip route add 20.10.172.192/27 via 20.10.172.190'))
-
-    print(host_B_1.cmd('ip route add 20.10.172.128/26 via 20.10.172.126'))
-    print(host_B_1.cmd('ip route add 20.10.172.192/27 via 20.10.172.126'))
-    print(host_B_2.cmd('ip route add 20.10.172.128/26 via 20.10.172.126'))
-    print(host_B_2.cmd('ip route add 20.10.172.192/27 via 20.10.172.126'))
-
-    print(host_C_1.cmd('ip route add 20.10.172.128/26 via 20.10.172.222'))
-    print(host_C_1.cmd('ip route add 20.10.172.0/25   via 20.10.172.222'))
-    print(host_C_2.cmd('ip route add 20.10.172.128/26 via 20.10.172.222'))
-    print(host_C_2.cmd('ip route add 20.10.172.0/25   via 20.10.172.222'))
-
-    # verify the routes actually got added this time
-    info('*** Routing tables after configuration\n')
-    info('Router A:\n')
-    info(router_A.cmd('ip route'))
-    info('Router B:\n')
-    info(router_B.cmd('ip route'))
-    info('Router C:\n')
-    info(router_C.cmd('ip route'))
+    info('*** Router A interfaces:\n')
+    info(router_A.cmd('ip addr'))
+    info('*** Router B interfaces:\n')
+    info(router_B.cmd('ip addr'))
+    info('*** Router C interfaces:\n')
+    info(router_C.cmd('ip addr'))
 
     info('*** Testing with pingAll\n')
     net.pingAll()
