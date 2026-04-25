@@ -34,9 +34,9 @@ class NetworkTopo(Topo):
 
         # each LAN needs a switch so both hosts can connect to the router
         info('*** Adding switches\n')
-        sA = self.addSwitch('sA')
-        sB = self.addSwitch('sB')
-        sC = self.addSwitch('sC')
+        sA = self.addSwitch('sA', dpid='0000000000000001')
+        sB = self.addSwitch('sB', dpid='0000000000000002')
+        sC = self.addSwitch('sC', dpid='0000000000000003')
 
         info('*** Adding links\n')
         self.addLink(router_A, sA, intfName1='ra-eth0', params1={'ip': '20.10.172.190/26'})
