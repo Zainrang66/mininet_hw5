@@ -49,14 +49,14 @@ class NetworkTopo(Topo):
         self.addLink(host_C_1, sC)
         self.addLink(host_C_2, sC)
         # link router A to router B
-        self.addLink(router_A, router_B, intfName1='ra-eth1', params1={'ip': '20.10.100.1/30'}, intfName2='rb-eth1',
-                    params2={'ip': '20.10.100.2/30'})
+        self.addLink(router_A, router_B, intfName1='ra-eth1', params1={'ip': '20.10.100.1/24'}, intfName2='rb-eth1',
+                    params2={'ip': '20.10.100.2/24'})
         # link router A to router C
-        self.addLink(router_A, router_C, intfName1='ra-eth2', params1={'ip': '20.10.100.5/30'}, intfName2='rc-eth1',
-                    params2={'ip': '20.10.100.6/30'})
+        self.addLink(router_A, router_C, intfName1='ra-eth2', params1={'ip': '20.10.100.3/24'}, intfName2='rc-eth1',
+                    params2={'ip': '20.10.100.4/24'})
         # link router C to router B
-        self.addLink(router_B, router_C, intfName1='rb-eth2', params1={'ip': '20.10.100.9/30'}, intfName2='rc-eth2',
-                    params2={'ip': '20.10.100.10/30'})
+        self.addLink(router_B, router_C, intfName1='rb-eth2', params1={'ip': '20.10.100.5/24'}, intfName2='rc-eth2',
+                    params2={'ip': '20.10.100.6/24'})
         
 def run():
 
