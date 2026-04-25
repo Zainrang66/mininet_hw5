@@ -1,7 +1,7 @@
 
 from mininet.topo import Topo
 from mininet.net import Mininet
-from mininet.node import Node, Controller
+from mininet.node import Node, Controller, RemoteController
 from mininet.log import setLogLevel, info
 from mininet.cli import CLI
 
@@ -34,18 +34,20 @@ class NetworkTopo(Topo):
 
         # each LAN needs a switch so both hosts can connect to the router
         info('*** Adding switches\n')
-        switch_A, switch_B, switch_C = [self.addSwitch(s) for s in ('switch_A', 'switch_B', 'switch_C')]
+        sA = self.addSwitch('sA')
+        sB = self.addSwitch('sB')
+        sC = self.addSwitch('sC')
 
         info('*** Adding links\n')
-        self.addLink(router_A, switch_A, intfName1='ra-eth0', params1={'ip': '20.10.172.190/26'})
-        self.addLink(host_A_1, switch_A)
-        self.addLink(host_A_2, switch_A)
-        self.addLink(router_B, switch_B, intfName1='rb-eth0', params1={'ip': '20.10.172.126/25'})
-        self.addLink(host_B_1, switch_B)
-        self.addLink(host_B_2, switch_B)
-        self.addLink(router_C, switch_C, intfName1='rc-eth0', params1={'ip': '20.10.172.222/27'})
-        self.addLink(host_C_1, switch_C)
-        self.addLink(host_C_2, switch_C)
+        self.addLink(router_A, sA, intfName1='ra-eth0', params1={'ip': '20.10.172.190/26'})
+        self.addLink(host_A_1, sA)
+        self.addLink(host_A_2, sA)
+        self.addLink(router_B, sB, intfName1='rb-eth0', params1={'ip': '20.10.172.126/25'})
+        self.addLink(host_B_1, sB)
+        self.addLink(host_B_2, sB)
+        self.addLink(router_C, sC, intfName1='rc-eth0', params1={'ip': '20.10.172.222/27'})
+        self.addLink(host_C_1, sC)
+        self.addLink(host_C_2, sC)
         # link router A to router B
         self.addLink(router_A, router_B, intfName1='ra-eth1', params1={'ip': '20.10.100.1/24'}, intfName2='rb-eth1',
                     params2={'ip': '20.10.100.2/24'})
@@ -59,7 +61,7 @@ class NetworkTopo(Topo):
 def run():
 
     topo = NetworkTopo()
-    net = Mininet(topo=topo, controller=Controller)
+    net = Mininet(topo=topo)
 
     info('*** Start\n')
     net.start()
